@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Beauty Lab — Alexandra Parrales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  SETUP REQUIRED — READ BEFORE GOING LIVE            ║
+  ║                                                      ║
+  ║  1. EMAILJS (Booking + Contact forms)               ║
+  ║     a. Create free account at emailjs.com           ║
+  ║     b. Add your Gmail as an Email Service           ║
+  ║     c. Create two Email Templates:                  ║
+  ║        - "booking_request" (see template below)     ║
+  ║        - "contact_message"                          ║
+  ║     d. Replace the three EMAILJS_* placeholders     ║
+  ║        in the <script> block at the bottom          ║
+  ║                                                      ║
+  ║  2. MAILCHIMP (Newsletter)                          ║
+  ║     a. Create free account at mailchimp.com         ║
+  ║     b. Create an Audience                           ║
+  ║     c. Go to Audience → Signup Forms → Embedded     ║
+  ║     d. Copy the action URL and replace              ║
+  ║        MAILCHIMP_ACTION_URL in the form below       ║
+  ╚══════════════════════════════════════════════════════╝
+-->
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:    #F8F3EB;
+    --linen:    #EDE6D9;
+    --sand:     #D9CEC0;
+    --tan:      #B8A898;
+    --brown:    #7A6555;
+    --espresso: #3C2E24;
+    --ink:      #1E1610;
+    --white:    #FDFAF5;
+    --serif:    'Cormorant Garamond', Georgia, serif;
+    --sans:     'Jost', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--espresso); font-family: var(--sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 4rem;
+    background: rgba(248,243,235,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(184,168,152,0.25);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; letter-spacing: 0.04em; color: var(--espresso); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brown); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--espresso); }
+  .nav-book { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--white); background: var(--espresso); padding: 0.65rem 1.6rem; text-decoration: none; transition: background 0.25s; }
+  .nav-book:hover { background: var(--brown); }
+
+  /* ── HERO ── */
+  #home { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 5rem; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 4rem 6rem 5rem; }
+  .hero-eyebrow { font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--tan); margin-bottom: 1.6rem; }
+  .hero-title { font-family: var(--serif); font-size: clamp(3.2rem, 5.5vw, 5.2rem); font-weight: 300; line-height: 1.08; color: var(--ink); margin-bottom: 1.8rem; }
+  .hero-title em { font-style: italic; color: var(--brown); }
+  .hero-sub { font-size: 0.88rem; line-height: 1.85; color: var(--brown); max-width: 380px; margin-bottom: 3rem; }
+  .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary { display: inline-block; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--white); background: var(--espresso); padding: 1rem 2.2rem; text-decoration: none; border: none; cursor: pointer; transition: background 0.25s; font-family: var(--sans); }
+  .btn-primary:hover { background: var(--brown); }
+  .btn-ghost { display: inline-block; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--espresso); border-bottom: 1px solid var(--sand); padding-bottom: 0.2rem; text-decoration: none; transition: border-color 0.2s; }
+  .btn-ghost:hover { border-color: var(--espresso); }
+  .hero-right { position: relative; background: var(--linen); overflow: hidden; }
+  .hero-img-placeholder { width: 100%; height: 100%; min-height: 600px; background: linear-gradient(160deg, #D9CEC0 0%, #C4B5A5 40%, #B0A090 100%); display: flex; align-items: flex-end; padding: 3rem; }
+  .hero-quote { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; font-style: italic; color: rgba(60,46,36,0.75); line-height: 1.4; max-width: 280px; }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap { background: var(--espresso); padding: 1rem 0; overflow: hidden; white-space: nowrap; }
+  .marquee-track { display: inline-flex; gap: 3rem; animation: marquee 22s linear infinite; }
+  .marquee-item { font-family: var(--serif); font-size: 1rem; font-weight: 300; font-style: italic; color: var(--sand); letter-spacing: 0.04em; flex-shrink: 0; }
+  .marquee-dot { color: var(--tan); font-style: normal; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── SHARED SECTION ── */
+  section { padding: 7rem 5rem; }
+  .section-eyebrow { font-size: 0.65rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--tan); margin-bottom: 1.2rem; display: block; }
+  .section-title { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; line-height: 1.15; color: var(--ink); margin-bottom: 1.4rem; }
+  .divider { width: 40px; height: 1px; background: var(--sand); margin: 1.4rem 0; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--white); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 1.5rem; }
+  .services-intro { max-width: 420px; font-size: 0.87rem; color: var(--brown); line-height: 1.85; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--linen); }
+  .service-category { padding: 2.4rem 2rem; border-right: 1px solid var(--linen); border-bottom: 1px solid var(--linen); }
+  .service-category:nth-child(3n) { border-right: none; }
+  .service-category:nth-last-child(-n+3) { border-bottom: none; }
+  .cat-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: var(--espresso); margin-bottom: 0.4rem; }
+  .cat-tag { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--tan); display: block; margin-bottom: 1.4rem; }
+  .service-item { display: flex; justify-content: space-between; align-items: baseline; padding: 0.55rem 0; border-bottom: 1px solid rgba(217,206,192,0.4); gap: 0.5rem; }
+  .service-item:last-child { border-bottom: none; }
+  .service-name { font-size: 0.82rem; color: var(--espresso); flex: 1; }
+  .service-note { font-size: 0.72rem; color: var(--tan); font-style: italic; display: block; }
+  .service-price { font-family: var(--serif); font-size: 1rem; font-weight: 300; color: var(--brown); white-space: nowrap; flex-shrink: 0; }
+
+  /* ── BOOKING ── */
+  #booking { background: var(--linen); }
+  .booking-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; margin-top: 2rem; }
+  .booking-info p { font-size: 0.87rem; color: var(--brown); line-height: 1.85; margin-bottom: 1.5rem; }
+  .booking-info ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .booking-info li { font-size: 0.82rem; color: var(--brown); padding-left: 1rem; position: relative; }
+  .booking-info li::before { content: "—"; position: absolute; left: 0; color: var(--tan); }
+  .booking-form-wrap { background: var(--white); padding: 3rem; }
+  .booking-form-wrap h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--espresso); margin-bottom: 2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .form-group { margin-bottom: 1.4rem; }
+  .form-group label { display: block; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tan); margin-bottom: 0.5rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; background: transparent; border: none;
+    border-bottom: 1px solid var(--sand);
+    padding: 0.6rem 0; font-family: var(--sans); font-size: 0.85rem;
+    font-weight: 300; color: var(--espresso); outline: none;
+    transition: border-color 0.2s; -webkit-appearance: none; border-radius: 0;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--brown); }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+  .form-group select option { background: var(--white); color: var(--espresso); }
+  .time-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
+  .time-slot {
+    padding: 0.5rem 0.3rem; text-align: center; font-size: 0.75rem;
+    font-family: var(--sans); font-weight: 300; color: var(--brown);
+    border: 1px solid var(--sand); background: transparent;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em;
+  }
+  .time-slot:hover { border-color: var(--brown); color: var(--espresso); }
+  .time-slot.selected { background: var(--espresso); color: var(--white); border-color: var(--espresso); }
+  .time-slot.unavailable { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+  .btn-book { width: 100%; margin-top: 0.5rem; }
+  .form-status { margin-top: 1rem; font-size: 0.8rem; text-align: center; min-height: 1.4rem; }
+  .form-status.success { color: var(--brown); }
+  .form-status.error { color: #8B3A3A; }
+
+  /* ── ABOUT ── */
+  #about { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0; }
+  .about-img { background: var(--linen); min-height: 600px; overflow: hidden; }
+  .about-img-placeholder { width: 100%; height: 100%; min-height: 600px; background: linear-gradient(135deg, #C4B5A5 0%, #A89484 100%); display: flex; align-items: center; justify-content: center; }
+  .about-initials { font-family: var(--serif); font-size: 8rem; font-weight: 300; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; }
+  .about-content { padding: 7rem 5rem; display: flex; flex-direction: column; justify-content: center; background: var(--cream); }
+  .about-body { font-size: 0.88rem; line-height: 1.95; color: var(--brown); margin-top: 1.4rem; }
+  .about-stats { display: flex; gap: 3rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--linen); }
+  .stat-num { font-family: var(--serif); font-size: 2.4rem; font-weight: 300; color: var(--espresso); display: block; line-height: 1; }
+  .stat-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--tan); display: block; margin-top: 0.3rem; }
+
+  /* ── GALLERY ── */
+  #gallery { background: var(--cream); }
+  .gallery-intro { max-width: 520px; font-size: 0.87rem; color: var(--brown); line-height: 1.85; margin-bottom: 3.5rem; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; gap: 12px; }
+  .gallery-cell { background: var(--linen); overflow: hidden; position: relative; }
+  .gallery-cell.tall { grid-row: span 2; overflow: hidden; }
+  .gallery-placeholder { width: 100%; height: 100%; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; padding: 2rem; }
+  .gallery-cell.tall .gallery-placeholder { min-height: 460px; }
+  .gallery-ph-icon { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--sand); font-style: italic; }
+  .gallery-ph-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--tan); text-align: center; }
+
+  .hero-img-real { width: 100%; height: 100%; min-height: 600px; object-fit: cover; object-position: center top; display: block; }
+  .about-img-real { width: 100%; height: 100%; min-height: 600px; object-fit: cover; object-position: center top; display: block; }
+  .gallery-img { width: 100%; height: 100%; min-height: 320px; object-fit: contain; background: var(--linen); display: block; transition: transform 0.4s ease; }
+  .gallery-cell.tall .gallery-img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+  .gallery-cell:hover .gallery-img { transform: scale(1.03); }
+
+  .gallery-note { margin-top: 2rem; font-size: 0.78rem; color: var(--tan); font-style: italic; text-align: center; }
+
+  /* ── NEWSLETTER ── */
+  .newsletter-strip {
+    background: var(--espresso);
+    padding: 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .nl-left h2 { font-family: var(--serif); font-size: 2.4rem; font-weight: 300; color: var(--cream); line-height: 1.2; margin-bottom: 0.8rem; }
+  .nl-left p { font-size: 0.85rem; color: var(--tan); line-height: 1.8; }
+  .nl-form { display: flex; flex-direction: column; gap: 0.8rem; }
+  .nl-row { display: flex; gap: 0.8rem; }
+  .nl-input {
+    flex: 1; background: transparent; border: none;
+    border-bottom: 1px solid rgba(184,168,152,0.5);
+    padding: 0.7rem 0; font-family: var(--sans); font-size: 0.85rem;
+    font-weight: 300; color: var(--cream); outline: none;
+    transition: border-color 0.2s;
+  }
+  .nl-input::placeholder { color: rgba(184,168,152,0.6); }
+  .nl-input:focus { border-color: var(--sand); }
+  .btn-nl {
+    font-family: var(--sans); font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--espresso); background: var(--sand);
+    border: none; padding: 0.7rem 1.8rem; cursor: pointer;
+    transition: background 0.25s; white-space: nowrap;
+  }
+  .btn-nl:hover { background: var(--cream); }
+  .nl-note { font-size: 0.7rem; color: rgba(184,168,152,0.6); }
+  .nl-status { font-size: 0.78rem; color: var(--tan); min-height: 1.2rem; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 3rem; }
+  .location-card { padding: 2.5rem; border: 1px solid var(--linen); background: var(--cream); }
+  .location-card h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: var(--espresso); margin-bottom: 0.5rem; }
+  .location-days { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--tan); display: block; margin-bottom: 1rem; }
+  .location-addr { font-size: 0.86rem; color: var(--brown); line-height: 1.7; }
+  .location-note { font-size: 0.78rem; color: var(--tan); font-style: italic; margin-top: 1rem; line-height: 1.65; }
+  .contact-form-side h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: var(--espresso); margin-bottom: 1.5rem; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--espresso); color: var(--sand); padding: 3.5rem 5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: var(--cream); letter-spacing: 0.04em; }
+  .footer-copy { font-size: 0.72rem; color: var(--tan); letter-spacing: 0.06em; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tan); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cream); }
+
+  /* ── FADE IN ── */
+  .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.75s ease, transform 0.75s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+    #home { grid-template-columns: 1fr; }
+    .hero-left { padding: 5rem 2rem 3rem; }
+    .hero-right { min-height: 50vw; }
+    section { padding: 5rem 2rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-category { border-right: none; border-bottom: 1px solid var(--linen); }
+    .service-category:last-child { border-bottom: none; }
+    .booking-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .time-slots { grid-template-columns: repeat(3, 1fr); }
+    #about { grid-template-columns: 1fr; }
+    .about-content { padding: 4rem 2rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-cell.tall { grid-row: span 1; }
+    .newsletter-strip { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 2rem; }
+    .nl-row { flex-direction: column; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; text-align: center; padding: 2.5rem 2rem; }
+  }
+
+  /* ── LEGAL MODALS ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(30,22,16,0.72); backdrop-filter: blur(6px);
+    align-items: flex-start; justify-content: center;
+    padding: 2rem 1rem; overflow-y: auto;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--white); width: 100%; max-width: 760px;
+    margin: auto; padding: 3.5rem 3.5rem 3rem;
+    position: relative; border-top: 3px solid var(--sand);
+  }
+  .modal-close {
+    position: absolute; top: 1.4rem; right: 1.6rem;
+    background: none; border: none; cursor: pointer;
+    font-size: 1.2rem; color: var(--tan); line-height: 1;
+    padding: 0.4rem; transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--espresso); }
+  .modal-eyebrow {
+    font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--tan); display: block; margin-bottom: 0.6rem;
+  }
+  .modal-title {
+    font-family: var(--serif); font-size: 2rem; font-weight: 300;
+    color: var(--ink); margin-bottom: 0.3rem; line-height: 1.15;
+  }
+  .modal-date { font-size: 0.75rem; color: var(--tan); margin-bottom: 2rem; display: block; }
+  .modal-divider { height: 1px; background: var(--linen); margin: 1.6rem 0; }
+  .modal-h2 {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--brown); margin: 2rem 0 0.6rem;
+  }
+  .modal-p {
+    font-size: 0.84rem; color: var(--brown); line-height: 1.85;
+    margin-bottom: 0.7rem;
+  }
+  .modal-ul {
+    list-style: none; padding: 0; margin: 0 0 0.7rem 0;
+  }
+  .modal-ul li {
+    font-size: 0.84rem; color: var(--brown); line-height: 1.75;
+    padding-left: 1.2rem; position: relative; margin-bottom: 0.25rem;
+  }
+  .modal-ul li::before { content: "\2013"; position: absolute; left: 0; color: var(--tan); }
+  .modal-alert {
+    background: var(--linen); border-left: 3px solid var(--sand);
+    padding: 1rem 1.2rem; margin: 1rem 0; border-radius: 0;
+  }
+  .modal-alert p { font-size: 0.82rem; color: var(--brown); margin: 0; line-height: 1.75; }
+  .modal-alert strong { color: var(--espresso); }
+  .modal-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1rem; font-size: 0.82rem; }
+  .modal-table th { background: var(--espresso); color: var(--cream); padding: 0.5rem 0.8rem; text-align: left; font-weight: 400; letter-spacing: 0.06em; }
+  .modal-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--linen); color: var(--brown); vertical-align: top; }
+  .modal-table tr:nth-child(even) td { background: var(--cream); }
+  .footer-legal { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+  .footer-legal a { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tan); text-decoration: none; opacity: 0.7; transition: opacity 0.2s; cursor: pointer; }
+  .footer-legal a:hover { opacity: 1; color: var(--cream); }
+  @media (max-width: 700px) { .modal-box { padding: 2.5rem 1.5rem 2rem; } }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">AP Beauty Lab</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#booking" class="nav-book">Book a Session</a>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-left fade-in">
+    <span class="hero-eyebrow">Licensed Esthetician &nbsp;·&nbsp; Garfield, NJ</span>
+    <h1 class="hero-title">
+      Skin &amp; body<br>
+      care, <em>refined</em>
+    </h1>
+    <p class="hero-sub">
+      Hi, I'm Alexandra — a bilingual licensed esthetician with 3 years of experience dedicated to helping you look and feel your absolute best. Every session is personalized, precise, and designed with care.
+    </p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary">Book a Session</a>
+      <a href="#services" class="btn-ghost">View Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="images/hero.jpg" alt="AP Beauty Lab treatment" class="hero-img-real">
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Signature Facial</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Lymphatic Drainage</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Microneedling</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Chemical Peel</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Lash Lift</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Brow Lamination</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Microdermabrasion</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Waxing</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Signature Facial</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Lymphatic Drainage</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Microneedling</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Chemical Peel</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Lash Lift</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Brow Lamination</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Microdermabrasion</span><span class="marquee-item marquee-dot">·</span>
+    <span class="marquee-item">Waxing</span><span class="marquee-item marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header fade-in">
+    <div>
+      <span class="section-eyebrow">What I offer</span>
+      <h2 class="section-title">Services &amp; Pricing</h2>
+    </div>
+    <p class="services-intro">Every service is tailored to your skin, your goals, and your comfort. Browse below and book the treatment that calls to you.</p>
+  </div>
+  <div class="services-grid fade-in">
+    <div class="service-category">
+      <h3 class="cat-name">Facials</h3>
+      <span class="cat-tag">Skin treatments</span>
+      <div class="service-item"><div><span class="service-name">Signature Facial</span><span class="service-note">Deep cleanse · steam · massage · serums</span></div><span class="service-price">$100</span></div>
+      <div class="service-item"><div><span class="service-name">Microdermabrasion</span><span class="service-note">Texture · tone · radiance</span></div><span class="service-price">$120</span></div>
+      <div class="service-item"><div><span class="service-name">Chemical Peel</span><span class="service-note">Pigmentation · acne · renewal</span></div><span class="service-price">$135</span></div>
+      <div class="service-item"><div><span class="service-name">Microneedling</span><span class="service-note">Collagen · scars · firmness</span></div><span class="service-price">$185</span></div>
+    </div>
+    <div class="service-category">
+      <h3 class="cat-name">Lymphatic Drainage</h3>
+      <span class="cat-tag">Certified massage therapy</span>
+      <div class="service-item"><div><span class="service-name">Body Drainage</span><span class="service-note">1 hr · body + wrapping</span></div><span class="service-price">$200</span></div>
+      <div class="service-item"><div><span class="service-name">Full Body + Face</span><span class="service-note">1 hr 20 min · body, dry brush, wrap, scrub</span></div><span class="service-price">$285</span></div>
+      <div class="service-item"><div><span class="service-name">Gold Package</span><span class="service-note">2 hrs · massage, face, wrap, red light, scrub</span></div><span class="service-price">$350</span></div>
+    </div>
+    <div class="service-category">
+      <h3 class="cat-name">Lash &amp; Brow</h3>
+      <span class="cat-tag">Enhancement services</span>
+      <div class="service-item"><div><span class="service-name">Lash Lift</span><span class="service-note">Lasts 6–8 weeks</span></div><span class="service-price">$60</span></div>
+      <div class="service-item"><span class="service-name">Lash Lift + Tint</span><span class="service-price">$65</span></div>
+      <div class="service-item"><div><span class="service-name">Brow Lamination</span><span class="service-note">Includes mapping &amp; wax</span></div><span class="service-price">$60</span></div>
+      <div class="service-item"><span class="service-name">Brow Lamination + Tint</span><span class="service-price">$65</span></div>
+    </div>
+    <div class="service-category">
+      <h3 class="cat-name">Waxing</h3>
+      <span class="cat-tag">Body &amp; face</span>
+      <div class="service-item"><span class="service-name">Brazilian</span><span class="service-price">$80</span></div>
+      <div class="service-item"><span class="service-name">Bikini</span><span class="service-price">$45</span></div>
+      <div class="service-item"><span class="service-name">Full Leg</span><span class="service-price">$40</span></div>
+      <div class="service-item"><span class="service-name">Full Arm</span><span class="service-price">$30</span></div>
+      <div class="service-item"><span class="service-name">Underarm</span><span class="service-price">$20</span></div>
+      <div class="service-item"><span class="service-name">Eyebrow Wax</span><span class="service-price">$15</span></div>
+      <div class="service-item"><span class="service-name">Eyebrow Wax + Tint</span><span class="service-price">$20</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="fade-in">
+    <span class="section-eyebrow">Reserve your session</span>
+    <h2 class="section-title">Book an Appointment</h2>
+  </div>
+  <div class="booking-layout fade-in">
+    <div class="booking-info">
+      <p>Choose your service, pick a date and time, and submit. Alexandra will confirm your appointment within 24 hours by text or email.</p>
+      <ul>
+        <li>Wednesday &amp; Friday at 160 Lanza Ave, Garfield</li>
+        <li>Other days by request — address provided after confirmation</li>
+        <li>Bilingual service available — English &amp; Spanish</li>
+        <li>Please arrive 5 minutes before your appointment</li>
+        <li>Cancellations must be made 24 hours in advance</li>
+      </ul>
+    </div>
+    <div class="booking-form-wrap">
+      <h3>Request an Appointment</h3>
+      <form id="bookingForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" id="b_firstname" placeholder="Your first name" required>
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" id="b_lastname" placeholder="Your last name" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone number</label>
+            <input type="tel" id="b_phone" placeholder="(201) 555-0100" required>
+          </div>
+          <div class="form-group">
+            <label>Email address</label>
+            <input type="email" id="b_email" placeholder="you@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Service requested</label>
+          <select id="b_service" required>
+            <option value="">Select a service…</option>
+            <optgroup label="Facials">
+              <option>Signature Facial — $100</option>
+              <option>Microdermabrasion — $120</option>
+              <option>Chemical Peel — $135</option>
+              <option>Microneedling — $185</option>
+            </optgroup>
+            <optgroup label="Lymphatic Drainage">
+              <option>Body Drainage — $200</option>
+              <option>Full Body + Face — $285</option>
+              <option>Gold Package — $350</option>
+            </optgroup>
+            <optgroup label="Lash & Brow">
+              <option>Lash Lift — $60</option>
+              <option>Lash Lift + Tint — $65</option>
+              <option>Brow Lamination — $60</option>
+              <option>Brow Lamination + Tint — $65</option>
+            </optgroup>
+            <optgroup label="Waxing">
+              <option>Brazilian — $80</option>
+              <option>Bikini — $45</option>
+              <option>Full Leg — $40</option>
+              <option>Full Arm — $30</option>
+              <option>Underarm — $20</option>
+              <option>Eyebrow Wax — $15</option>
+              <option>Eyebrow Wax + Tint — $20</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preferred date</label>
+            <input type="date" id="b_date" required>
+          </div>
+          <div class="form-group">
+            <label>Preferred language</label>
+            <select id="b_lang">
+              <option value="English">English</option>
+              <option value="Spanish">Spanish / Español</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Select a time</label>
+          <div class="time-slots" id="timeSlots">
+            <button type="button" class="time-slot" data-time="9:00 AM">9:00 AM</button>
+            <button type="button" class="time-slot" data-time="10:00 AM">10:00 AM</button>
+            <button type="button" class="time-slot" data-time="11:00 AM">11:00 AM</button>
+            <button type="button" class="time-slot" data-time="12:00 PM">12:00 PM</button>
+            <button type="button" class="time-slot" data-time="1:00 PM">1:00 PM</button>
+            <button type="button" class="time-slot" data-time="2:00 PM">2:00 PM</button>
+            <button type="button" class="time-slot" data-time="3:00 PM">3:00 PM</button>
+            <button type="button" class="time-slot" data-time="4:00 PM">4:00 PM</button>
+          </div>
+          <input type="hidden" id="b_time" required>
+        </div>
+        <div class="form-group">
+          <label>Notes (optional)</label>
+          <textarea id="b_notes" placeholder="Any skin concerns, allergies, or requests…"></textarea>
+        </div>
+        <button type="submit" class="btn-primary btn-book">Request Appointment</button>
+        <p class="form-status" id="bookingStatus"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="about-img">
+    <img src="images/about.jpg" alt="Alexandra Parrales" class="about-img-real">
+  </div>
+  <div class="about-content fade-in">
+    <span class="section-eyebrow">My story</span>
+    <h2 class="section-title">Alexandra Parrales</h2>
+    <div class="divider"></div>
+    <p class="about-body">
+      I immigrated from Perú to the United States when I was turning 12, and found my passion for beauty at 15. Today, at 22, I am a licensed esthetician with three years of experience — and every session I do is a reflection of that passion.<br><br>
+      My desire with AP Beauty Lab is to help women feel more confident in their bodies and skin. As a bilingual professional, I am proud to connect with a diverse range of clients and create a comfortable, personalized experience for everyone.<br><br>
+      I am certified in Lymphatic Drainage massage and have been fully licensed since 2023. I strive for excellence in every detail — so that each client leaves feeling confident, refreshed, and truly cared for.
+    </p>
+    <div class="about-stats">
+      <div><span class="stat-num">3+</span><span class="stat-label">Years experience</span></div>
+      <div><span class="stat-num">2</span><span class="stat-label">Languages</span></div>
+      <div><span class="stat-num">2023</span><span class="stat-label">Licensed since</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="fade-in">
+    <span class="section-eyebrow">The experience</span>
+    <h2 class="section-title">Gallery</h2>
+  </div>
+  <p class="gallery-intro fade-in">A glimpse into the AP Beauty Lab experience — the space, the treatments, and the results. Photos coming soon from Alexandra directly.</p>
+  <div class="gallery-grid fade-in">
+    <div class="gallery-cell tall"><img src="images/lymph-ba-1.jpg" alt="Lymphatic drainage result" class="gallery-img"></div>
+    <div class="gallery-cell"><img src="images/facial-1.jpg" alt="Facial treatment" class="gallery-img"></div>
+    <div class="gallery-cell"><img src="images/brow-1.jpg" alt="Brow lamination result" class="gallery-img"></div>
+    <div class="gallery-cell"><img src="images/lash-1.jpg" alt="Lash lift result" class="gallery-img"></div>
+    <div class="gallery-cell"><img src="images/lymph-ba-2.jpg" alt="Lymphatic drainage before and after" class="gallery-img"></div>
+  </div>
+  <p class="gallery-note fade-in">Photos will be updated as Alexandra shares them.</p>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-strip fade-in">
+  <div class="nl-left">
+    <h2>Stay in the loop</h2>
+    <p>Special offers, skincare tips, and new service announcements — delivered straight to your inbox. No spam, ever. Unsubscribe any time.</p>
+  </div>
+  <div>
+    <!-- REPLACE action="MAILCHIMP_ACTION_URL" with your Mailchimp form action URL -->
+    <form class="nl-form" id="nlForm" action="MAILCHIMP_ACTION_URL" method="post" target="_blank" novalidate>
+      <div class="nl-row">
+        <input class="nl-input" type="text" name="FNAME" id="nl_name" placeholder="Your first name">
+        <input class="nl-input" type="email" name="EMAIL" id="nl_email" placeholder="Email address" required>
+        <button type="submit" class="btn-nl">Subscribe</button>
+      </div>
+      <!-- Mailchimp bot-protection field — do not remove -->
+      <div style="position:absolute;left:-5000px;" aria-hidden="true">
+        <input type="text" name="b_REPLACE_THIS" tabindex="-1" value="">
+      </div>
+      <p class="nl-note">By subscribing you agree to receive occasional emails from AP Beauty Lab. Unsubscribe at any time.</p>
+      <p class="nl-status" id="nlStatus"></p>
+    </form>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-in">
+    <span class="section-eyebrow">Find me</span>
+    <h2 class="section-title">Location &amp; Contact</h2>
+  </div>
+  <div class="contact-grid fade-in">
+    <div>
+      <div class="location-card">
+        <h3>Garfield MedSpa</h3>
+        <span class="location-days">Wednesdays &amp; Fridays</span>
+        <p class="location-addr">160 Lanza Ave<br>Garfield, NJ</p>
+        <p class="location-note">For appointments on other days of the week, please book online first — I will share my address with you directly after confirming.</p>
+      </div>
+    </div>
+    <div class="contact-form-side">
+      <h3>Send a message</h3>
+      <form id="contactForm" novalidate>
+        <div class="form-group"><label>Your name</label><input type="text" id="c_name" placeholder="Full name" required></div>
+        <div class="form-group"><label>Email</label><input type="email" id="c_email" placeholder="you@email.com" required></div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select id="c_subject">
+            <option>General question</option>
+            <option>Service inquiry</option>
+            <option>Pricing</option>
+            <option>Rescheduling</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="c_message" placeholder="How can I help you?" required></textarea></div>
+        <button type="submit" class="btn-primary">Send Message</button>
+        <p class="form-status" id="contactStatus"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">AP Beauty Lab</span>
+  <ul class="footer-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 AP Beauty Lab · Alexandra Parrales · Garfield, NJ</span>
+</footer>
+<div style="background:var(--espresso);padding:0.8rem 5rem 1.2rem;border-top:1px solid rgba(255,255,255,0.06);">
+  <div class="footer-legal">
+    <a onclick="openModal('privacy')">Privacy Policy</a>
+    <a onclick="openModal('terms')">Terms of Service</a>
+    <a onclick="openModal('disclaimer')">Health Disclaimer</a>
+    <a onclick="openModal('cookies')">Cookie Policy</a>
+    <a onclick="openModal('cancellation')">Cancellation Policy</a>
+  </div>
+</div>
+
+<!--
+  EmailJS SDK
+  REPLACE the three values below:
+    EMAILJS_PUBLIC_KEY   → Your EmailJS public key (Account > API Keys)
+    EMAILJS_SERVICE_ID   → Your EmailJS service ID (Email Services tab)
+    EMAILJS_BOOKING_TID  → Template ID for booking emails
+    EMAILJS_CONTACT_TID  → Template ID for contact emails
+
+  EmailJS Booking Template variables to use:
+    {{client_name}}, {{client_email}}, {{client_phone}},
+    {{service}}, {{date}}, {{time}}, {{language}}, {{notes}}
+
+  EmailJS Contact Template variables:
+    {{from_name}}, {{from_email}}, {{subject}}, {{message}}
+-->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ── CONFIG — replace these before going live ──────────────────────────
+  const EMAILJS_PUBLIC_KEY  = 'EMAILJS_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID  = 'EMAILJS_SERVICE_ID';
+  const EMAILJS_BOOKING_TID = 'EMAILJS_BOOKING_TID';
+  const EMAILJS_CONTACT_TID = 'EMAILJS_CONTACT_TID';
+  // ─────────────────────────────────────────────────────────────────────
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  // ── SCROLL FADE IN ────────────────────────────────────────────────────
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  faders.forEach(el => observer.observe(el));
+  document.querySelector('.hero-left').classList.add('visible');
+
+  // ── NAV HIGHLIGHT ─────────────────────────────────────────────────────
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--espresso)' : '';
+    });
+  });
+
+  // ── TIME SLOT PICKER ──────────────────────────────────────────────────
+  document.querySelectorAll('.time-slot').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('b_time').value = btn.dataset.time;
+    });
+  });
+
+  // Set min date to today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('b_date').min = today;
+
+  // ── BOOKING FORM ──────────────────────────────────────────────────────
+  document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const status = document.getElementById('bookingStatus');
+    const btn = this.querySelector('.btn-book');
+
+    const time = document.getElementById('b_time').value;
+    if (!time) { status.textContent = 'Please select a time slot.'; status.className = 'form-status error'; return; }
+
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const params = {
+      client_name:  document.getElementById('b_firstname').value + ' ' + document.getElementById('b_lastname').value,
+      client_email: document.getElementById('b_email').value,
+      client_phone: document.getElementById('b_phone').value,
+      service:      document.getElementById('b_service').value,
+      date:         document.getElementById('b_date').value,
+      time:         time,
+      language:     document.getElementById('b_lang').value,
+      notes:        document.getElementById('b_notes').value || 'None',
+    };
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_BOOKING_TID, params);
+      status.textContent = 'Request sent! Alexandra will confirm within 24 hours.';
+      status.className = 'form-status success';
+      this.reset();
+      document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+    } catch (err) {
+      status.textContent = 'Something went wrong. Please try again or reach out directly.';
+      status.className = 'form-status error';
+      console.error(err);
+    } finally {
+      btn.textContent = 'Request Appointment';
+      btn.disabled = false;
+    }
+  });
+
+  // ── CONTACT FORM ──────────────────────────────────────────────────────
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const status = document.getElementById('contactStatus');
+    const btn = this.querySelector('.btn-primary');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const params = {
+      from_name:  document.getElementById('c_name').value,
+      from_email: document.getElementById('c_email').value,
+      subject:    document.getElementById('c_subject').value,
+      message:    document.getElementById('c_message').value,
+    };
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONTACT_TID, params);
+      status.textContent = 'Message sent — thank you!';
+      status.className = 'form-status success';
+      this.reset();
+    } catch (err) {
+      status.textContent = 'Something went wrong. Please try again.';
+      status.className = 'form-status error';
+    } finally {
+      btn.textContent = 'Send Message';
+      btn.disabled = false;
+    }
+  });
+</script>
+
+<!-- ══ LEGAL MODALS ══════════════════════════════════════════════════════ -->
+
+<!-- PRIVACY POLICY -->
+<div id="modal-privacy" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Privacy Policy">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('privacy')" aria-label="Close">✕</button>
+    <span class="modal-eyebrow">Legal</span>
+    <h2 class="modal-title">Privacy Policy</h2>
+    <span class="modal-date">Effective Date: March 25, 2026 &nbsp;·&nbsp; AP Beauty Lab, Garfield, NJ</span>
+    <div class="modal-divider"></div>
+    <p class="modal-p">AP Beauty Lab ("we," "our," or "us") is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal information when you visit our website or use our services.</p>
+
+    <p class="modal-h2">Information We Collect</p>
+    <ul class="modal-ul">
+      <li>Name, phone number, and email address — submitted via booking and contact forms</li>
+      <li>Service preferences, appointment notes, and health information you voluntarily share</li>
+      <li>Email address — if you subscribe to our newsletter</li>
+      <li>Basic server log data (IP address, browser type) collected automatically by our hosting provider</li>
+    </ul>
+
+    <p class="modal-h2">How We Use Your Information</p>
+    <ul class="modal-ul">
+      <li>To confirm and manage your appointment bookings</li>
+      <li>To respond to your messages and questions</li>
+      <li>To send newsletters if you have subscribed</li>
+      <li>To improve our website and services</li>
+    </ul>
+    <p class="modal-p">We do not sell, rent, or trade your personal information to any third party for marketing purposes.</p>
+
+    <p class="modal-h2">Third-Party Services</p>
+    <table class="modal-table">
+      <tr><th>Service</th><th>Purpose</th></tr>
+      <tr><td>EmailJS</td><td>Delivers booking and contact form submissions to our email</td></tr>
+      <tr><td>Brevo</td><td>Manages our newsletter subscriber list</td></tr>
+      <tr><td>Google Fonts</td><td>Loads website fonts — no personal data collected</td></tr>
+      <tr><td>Netlify</td><td>Hosts the website — collects standard server logs</td></tr>
+    </table>
+
+    <p class="modal-h2">Your Rights</p>
+    <ul class="modal-ul">
+      <li>Right to access — request a copy of the personal data we hold about you</li>
+      <li>Right to correction — request we correct inaccurate data</li>
+      <li>Right to deletion — request we delete your personal data</li>
+      <li>Right to unsubscribe — every newsletter email contains an unsubscribe link</li>
+    </ul>
+    <p class="modal-p">To exercise any of these rights, email us at: <strong>alex.esthetics14@gmail.com</strong></p>
+
+    <p class="modal-h2">Children's Privacy</p>
+    <p class="modal-p">Our services are not directed to individuals under 18. We do not knowingly collect personal information from minors.</p>
+
+    <p class="modal-h2">Changes to This Policy</p>
+    <p class="modal-p">We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date.</p>
+  </div>
+</div>
+
+<!-- TERMS OF SERVICE -->
+<div id="modal-terms" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Terms of Service">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('terms')" aria-label="Close">✕</button>
+    <span class="modal-eyebrow">Legal</span>
+    <h2 class="modal-title">Terms of Service</h2>
+    <span class="modal-date">Effective Date: March 25, 2026 &nbsp;·&nbsp; AP Beauty Lab, Garfield, NJ</span>
+    <div class="modal-divider"></div>
+    <p class="modal-p">By accessing this website or booking a service with AP Beauty Lab, you agree to be bound by these Terms of Service. Please read them carefully.</p>
+
+    <p class="modal-h2">Services</p>
+    <p class="modal-p">AP Beauty Lab provides licensed esthetics and wellness services including facials, lymphatic drainage massage, waxing, and lash and brow treatments. All services are performed by Alexandra Parrales, a licensed esthetician in New Jersey (licensed since 2023).</p>
+
+    <p class="modal-h2">Booking & Appointments</p>
+    <ul class="modal-ul">
+      <li>Appointment requests are not confirmed until you receive direct confirmation from Alexandra</li>
+      <li>You must be 18 or older to book independently — clients under 18 require written parental consent</li>
+      <li>Please arrive 5 minutes before your scheduled time</li>
+      <li>Late arrivals may result in a shortened service or rescheduling</li>
+    </ul>
+
+    <p class="modal-h2">Cancellation & Refunds</p>
+    <ul class="modal-ul">
+      <li>Cancellations must be made at least 24 hours before your appointment</li>
+      <li>Less than 24 hours notice may incur a 50% cancellation fee</li>
+      <li>No-shows without notice will be charged the full service price for future bookings</li>
+      <li>Completed services are non-refundable</li>
+    </ul>
+
+    <p class="modal-h2">Health Disclosure</p>
+    <ul class="modal-ul">
+      <li>You are responsible for disclosing any medical conditions, allergies, medications, or recent procedures</li>
+      <li>Our services are not medical treatments and are not intended to diagnose, treat, or cure any condition</li>
+      <li>Consult your physician before booking if you have an active medical condition</li>
+    </ul>
+
+    <p class="modal-h2">Liability Limitation</p>
+    <p class="modal-p">AP Beauty Lab shall not be liable for adverse reactions arising from undisclosed health conditions or failure to follow aftercare instructions. Our liability is limited to the amount paid for the specific service in question.</p>
+
+    <p class="modal-h2">Photography & Testimonials</p>
+    <ul class="modal-ul">
+      <li>We will always obtain written consent before using any photos or testimonials featuring you</li>
+      <li>You may withdraw consent at any time by contacting us</li>
+    </ul>
+
+    <p class="modal-h2">Governing Law</p>
+    <p class="modal-p">These Terms are governed by the laws of the State of New Jersey. Disputes shall be resolved in Bergen County, NJ, or through binding arbitration as mutually agreed.</p>
+  </div>
+</div>
+
+<!-- HEALTH DISCLAIMER -->
+<div id="modal-disclaimer" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Health Disclaimer">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('disclaimer')" aria-label="Close">✕</button>
+    <span class="modal-eyebrow">Legal</span>
+    <h2 class="modal-title">Health & Wellness Disclaimer</h2>
+    <span class="modal-date">Effective Date: March 25, 2026 &nbsp;·&nbsp; AP Beauty Lab, Garfield, NJ</span>
+    <div class="modal-divider"></div>
+
+    <div class="modal-alert">
+      <p>The services and content provided by AP Beauty Lab are for general wellness and cosmetic purposes only. Nothing on this website constitutes medical advice, diagnosis, or treatment.</p>
+    </div>
+
+    <p class="modal-h2">Not Medical Treatment</p>
+    <ul class="modal-ul">
+      <li>All services offered — including lymphatic drainage, facials, chemical peels, and microneedling — are cosmetic and wellness services</li>
+      <li>These are not medical procedures and are not performed by a licensed medical professional</li>
+      <li>Results vary by individual and are not guaranteed</li>
+      <li>No service is intended to diagnose, treat, cure, or prevent any disease or medical condition</li>
+    </ul>
+
+    <p class="modal-h2">Consult Your Doctor First If You Have</p>
+    <ul class="modal-ul">
+      <li>An active medical condition or are under a doctor's care</li>
+      <li>A current pregnancy (especially first trimester)</li>
+      <li>Active infections, blood clots, heart conditions, or cancer</li>
+      <li>Recent surgery (within 6 weeks)</li>
+      <li>Kidney or liver disease</li>
+    </ul>
+
+    <p class="modal-h2">Skin Treatment Notice</p>
+    <p class="modal-p">Chemical peels and microneedling involve physical changes to the skin. You must disclose all current skincare products, medications (including retinoids and blood thinners), and recent sun exposure before these treatments. Failure to disclose may increase risk of adverse reactions.</p>
+
+    <p class="modal-h2">Results Disclaimer</p>
+    <p class="modal-p">Before/after photos and testimonials represent individual results and are not a guarantee of outcomes. Results may vary based on skin type, health history, lifestyle, and adherence to aftercare instructions. All photos are used with written client consent and have not been digitally altered.</p>
+  </div>
+</div>
+
+<!-- COOKIE POLICY -->
+<div id="modal-cookies" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Cookie Policy">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('cookies')" aria-label="Close">✕</button>
+    <span class="modal-eyebrow">Legal</span>
+    <h2 class="modal-title">Cookie & Data Policy</h2>
+    <span class="modal-date">Effective Date: March 25, 2026 &nbsp;·&nbsp; AP Beauty Lab, Garfield, NJ</span>
+    <div class="modal-divider"></div>
+    <p class="modal-p">This website is designed to be as privacy-respecting as possible. Here is a complete disclosure of what is and is not collected.</p>
+
+    <p class="modal-h2">What We Do NOT Use</p>
+    <ul class="modal-ul">
+      <li>Google Analytics or any behavioral tracking cookies</li>
+      <li>Facebook Pixel or social media tracking</li>
+      <li>Advertising or retargeting cookies</li>
+      <li>Third-party data brokers of any kind</li>
+    </ul>
+
+    <p class="modal-h2">What Is Collected</p>
+    <table class="modal-table">
+      <tr><th>What</th><th>Why</th></tr>
+      <tr><td>Server logs (IP, browser, time)</td><td>Standard hosting logs for security and uptime — not used for tracking</td></tr>
+      <tr><td>Booking &amp; contact form data</td><td>Name, email, phone sent via EmailJS to Alexandra's email only</td></tr>
+      <tr><td>Newsletter emails</td><td>Stored in Brevo — used only to send the newsletter you signed up for</td></tr>
+      <tr><td>Google Fonts request</td><td>Your browser requests fonts from Google's CDN per their own privacy policy</td></tr>
+    </table>
+
+    <p class="modal-p">If analytics are added in the future, this policy will be updated and a cookie consent banner will be added to the site.</p>
+  </div>
+</div>
+
+<!-- CANCELLATION POLICY -->
+<div id="modal-cancellation" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Cancellation Policy">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('cancellation')" aria-label="Close">✕</button>
+    <span class="modal-eyebrow">Legal</span>
+    <h2 class="modal-title">Cancellation, Refund & Deposit Policy</h2>
+    <span class="modal-date">Effective Date: March 25, 2026 &nbsp;·&nbsp; AP Beauty Lab, Garfield, NJ</span>
+    <div class="modal-divider"></div>
+
+    <p class="modal-h2">Deposits</p>
+    <ul class="modal-ul">
+      <li>A deposit may be required for certain services or first-time bookings</li>
+      <li>Deposits are applied toward the total service cost</li>
+      <li>Deposits are non-refundable but transferable to a rescheduled appointment with sufficient notice</li>
+    </ul>
+
+    <p class="modal-h2">Cancellation Policy</p>
+    <table class="modal-table">
+      <tr><th>Notice Given</th><th>Policy</th></tr>
+      <tr><td>More than 24 hours</td><td>Full cancellation, no charge. Deposit transferred to next booking.</td></tr>
+      <tr><td>Less than 24 hours</td><td>50% cancellation fee. Deposit forfeited.</td></tr>
+      <tr><td>No-show (no notice)</td><td>100% of service price charged to future bookings. Deposit forfeited.</td></tr>
+      <tr><td>Emergency or illness</td><td>Handled case-by-case at Alexandra's discretion.</td></tr>
+    </table>
+
+    <p class="modal-h2">Refunds</p>
+    <ul class="modal-ul">
+      <li>Completed services are non-refundable</li>
+      <li>If you experience an adverse reaction as a direct result of the service, contact us within 48 hours and we will work with you to find a resolution</li>
+      <li>Unopened product purchases may be returned within 7 days for store credit</li>
+    </ul>
+
+    <p class="modal-h2">Rescheduling</p>
+    <ul class="modal-ul">
+      <li>Rescheduling with more than 24 hours notice is always free</li>
+      <li>Appointments may be rescheduled up to 2 times before a deposit is forfeited</li>
+    </ul>
+  </div>
+</div>
+
+<!-- MODAL JS -->
+<script>
+  function openModal(id) {
+    const el = document.getElementById('modal-' + id);
+    if (!el) return;
+    el.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    el.scrollTop = 0;
+  }
+  function closeModal(id) {
+    const el = document.getElementById('modal-' + id);
+    if (!el) return;
+    el.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close on backdrop click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(el => {
+        el.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
